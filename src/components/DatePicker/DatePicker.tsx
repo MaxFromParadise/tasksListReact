@@ -1,21 +1,25 @@
-import { useState, type DetailedHTMLProps, type HTMLAttributes, type JSX } from 'react';
+import type { HTMLAttributes, JSX, Ref } from 'react';
+import { forwardRef } from 'react';
 
-interface DatePickerProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {}
+interface DatePickerProps extends HTMLAttributes<HTMLInputElement> {
+	error?: string;
+}
 
-export const DatePicker = ({}: DatePickerProps): JSX.Element => {
-	const [value, setValue] = useState<string>('');
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(e.target.value);
-	};
-
+export const DatePicker = forwardRef(({ className, error, ...props }: DatePickerProps, ref: Ref<HTMLInputElement>): JSX.Element => {
 	return (
-		<input
-			className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
-			type='datetime-local'
-			onChange={handleChange}
-			value={value}
-		/>
+		<div className='w-full relative'>
+			<input
+				ref={ref}
+				type='datetime-local'
+				className={`bg-gray-50 border text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300'}
+            ${className ?? ''}`}
+				{...props}
+			/>
+			{error && <p className='absolute -bottom-4 left-0 text-xs text-red-600'>{error}</p>}
+		</div>
 	);
-};
+});
 
 DatePicker.displayName = 'DatePicker';

@@ -1,28 +1,29 @@
-import { useState, type JSX, type SelectHTMLAttributes } from 'react';
+import type { JSX, Ref, SelectHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 import { Priority } from '../../types';
 
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {}
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+	error?: string;
+}
 
-export const Select = ({ className, ...props }: SelectProps): JSX.Element => {
-	const [value, setValue] = useState<Priority>(Priority.Low);
-
-	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setValue(e.target.value as Priority);
-	};
-
+export const Select = forwardRef(({ className, error, ...props }: SelectProps, ref: Ref<HTMLSelectElement>): JSX.Element => {
 	return (
-		<select
-			onChange={handleChange}
-			value={value}
-			className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-				focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ${className ?? ''}`}
-			{...props}
-		>
-			<option value={Priority.Low}>Low</option>
-			<option value={Priority.Medium}>Medium</option>
-			<option value={Priority.High}>High</option>
-		</select>
+		<div className='w-full relative'>
+			<select
+				ref={ref}
+				className={`bg-gray-50 border text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300'}
+            ${className ?? ''}`}
+				{...props}
+			>
+				<option value={Priority.Low}>Low</option>
+				<option value={Priority.Medium}>Medium</option>
+				<option value={Priority.High}>High</option>
+			</select>
+			{error && <p className='absolute -bottom-4 left-0 text-xs text-red-600'>{error}</p>}
+		</div>
 	);
-};
+});
 
 Select.displayName = 'Select';

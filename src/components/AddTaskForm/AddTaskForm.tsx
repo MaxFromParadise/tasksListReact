@@ -1,18 +1,78 @@
-import type { JSX } from 'react';
+import { type JSX } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Priority, type Task } from '../../types';
 import { DatePicker } from '../DatePicker/DatePicker';
 import { Input } from '../Input/Input';
 import { Select } from '../Select/Select';
 
-interface TaskFormProps {}
+type TaskFormValues = Omit<Task, 'id'>;
 
-export const AddTaskForm = ({}: TaskFormProps): JSX.Element => {
+interface AddTaskFormProps {
+	onSubmit?: (task: Task) => void;
+}
+
+export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
+	const {
+		register,
+		handleSubmit,
+		control,
+		reset,
+		formState: { errors },
+	} = useForm<TaskFormValues>({
+		defaultValues: {
+			title: '',
+			priority: Priority.Low,
+			date: new Date().toISOString().slice(0, 16),
+		},
+	});
+
+	const submitHandler = (data: TaskFormValues) => {
+		const newTask: Task = {
+			...data,
+			id: crypto.randomUUID(),
+		};
+		onSubmit?.(newTask);
+		reset();
+	};
+
 	return (
-		<form>
-			<div className='m-auto mb-5 max-w-[90%] flex flex-col items-center justify-center gap-5'>
-				<Input placeholder='Task title' />
-				<Select />
-				<DatePicker />
-			</div>
+		<form
+			onSubmit={handleSubmit(submitHandler)}
+			className='flex flex-col gap-4 max-w-[90%] m-auto'
+		>
+			{/* Title */}
+			<Input
+				placeholder='Task title'
+				{...register('title', { required: 'Title is required' })}
+				error={errors.title?.message}
+			/>
+
+			{/* Priority */}
+			<Select
+				{...register('priority', { required: 'Priority is required' })}
+				error={errors.priority?.message}
+			/>
+
+			{/* Date */}
+			<Controller
+				name='date'
+				control={control}
+				rules={{ required: 'Date is required' }}
+				render={({ field, fieldState }) => (
+					<DatePicker
+						{...field}
+						error={fieldState.error?.message}
+					/>
+				)}
+			/>
+
+			{/* Submit */}
+			<button
+				type='submit'
+				className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+			>
+				Add Task
+			</button>
 		</form>
 	);
 };

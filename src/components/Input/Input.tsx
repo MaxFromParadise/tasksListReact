@@ -1,30 +1,22 @@
 import clsx from 'clsx';
-import type { InputHTMLAttributes, JSX } from 'react';
-import { useState } from 'react';
+import type { InputHTMLAttributes, JSX, Ref } from 'react';
+import { forwardRef } from 'react';
 
-interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	error?: string;
-	initialValue?: string;
-	onValueChange?: (value: string) => void;
 }
 
-export const Input = ({ className, error, initialValue = '', onValueChange, ...props }: InputProps): JSX.Element => {
-	const [value, setValue] = useState(initialValue);
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(e.target.value);
-		onValueChange?.(e.target.value);
-	};
-
+export const Input = forwardRef(({ className, error, ...props }: InputProps, ref: Ref<HTMLInputElement>): JSX.Element => {
 	return (
 		<div className='w-full relative'>
 			<input
-				value={value}
-				onChange={handleChange}
+				ref={ref}
 				className={clsx('block w-full rounded-lg border bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500', error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300', className)}
 				{...props}
 			/>
 			{error && <p className='absolute -bottom-4 left-0 text-xs text-red-600'>{error}</p>}
 		</div>
 	);
-};
+});
+
+Input.displayName = 'Input';
