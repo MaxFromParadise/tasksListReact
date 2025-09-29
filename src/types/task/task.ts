@@ -1,12 +1,8 @@
-export enum TaskPriority {
-	Low = 'low',
-	Medium = 'medium',
-	High = 'high',
-}
+import type { Priority } from '../index';
 
 export interface Task {
 	id: string;
 	title: string;
-	priority: TaskPriority;
+	priority: Priority;
 	date: string;
 }
