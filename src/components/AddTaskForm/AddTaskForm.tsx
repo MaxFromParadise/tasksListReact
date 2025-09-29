@@ -1,5 +1,6 @@
 import { type JSX } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTasks } from '../../hooks/tasks/useTasks';
 import { Priority, type Task } from '../../types';
 import { DatePicker } from '../DatePicker/DatePicker';
 import { Input } from '../Input/Input';
@@ -12,12 +13,14 @@ interface AddTaskFormProps {
 }
 
 export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
+	const { addTask } = useTasks();
+
 	const {
 		register,
 		handleSubmit,
 		control,
 		reset,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 	} = useForm<TaskFormValues>({
 		defaultValues: {
 			title: '',
@@ -32,6 +35,7 @@ export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
 			id: crypto.randomUUID(),
 		};
 		onSubmit?.(newTask);
+		addTask(newTask);
 		reset();
 	};
 
@@ -69,7 +73,8 @@ export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
 			{/* Submit */}
 			<button
 				type='submit'
-				className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+				disabled={isSubmitting}
+				className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-gray-400'
 			>
 				Add Task
 			</button>
