@@ -13,7 +13,7 @@ interface AddTaskFormProps {
 }
 
 export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
-	const { addTask, removeTask } = useTasks();
+	const { addTask } = useTasks();
 
 	const {
 		register,
