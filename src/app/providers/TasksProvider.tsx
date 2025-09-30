@@ -1,12 +1,6 @@
-import { createContext, useState, type ReactNode } from 'react';
-import type { Task } from '../types/task/task';
-
-interface TasksContextType {
-	tasks: Task[];
-	addTask: (task: Task) => void;
-}
-
-export const TasksContext = createContext<TasksContextType | undefined>(undefined);
+import { TasksContext } from '@/features/tasks/context/TasksContext';
+import type { Task } from '@/features/tasks/model/types';
+import { useState, type ReactNode } from 'react';
 
 export const TasksProvider = ({ children }: { children: ReactNode }) => {
 	const [tasks, setTasks] = useState<Task[]>([]);

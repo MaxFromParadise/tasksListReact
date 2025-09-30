@@ -1,6 +1,6 @@
+import { Priority } from '@/features/tasks/model/types';
 import type { JSX, Ref, SelectHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
-import { Priority } from '../../types';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 	error?: string;

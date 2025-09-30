@@ -1,10 +1,10 @@
+import { useTasks } from '@/features/tasks/hooks/useTasks';
+import { Priority, type Task } from '@/features/tasks/model/types';
+import { DatePicker } from '@/shared/ui/DatePicker/DatePicker';
+import { Input } from '@/shared/ui/Input/Input';
+import { Select } from '@/shared/ui/Select/Select';
 import { type JSX } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useTasks } from '../../hooks/tasks/useTasks';
-import { Priority, type Task } from '../../types';
-import { DatePicker } from '../DatePicker/DatePicker';
-import { Input } from '../Input/Input';
-import { Select } from '../Select/Select';
 
 type TaskFormValues = Omit<Task, 'id'>;
 

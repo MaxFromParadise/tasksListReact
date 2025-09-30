@@ -1,5 +1,5 @@
-import { AddTaskForm } from './components/AddTaskForm/AddTaskForm';
-import { Card } from './components/Card/Card';
+import { AddTaskForm } from '@/features/tasks/components/AddTaskForm/AddTaskForm';
+import { Card } from '@/shared/ui/Card/Card';
 
 function App() {
 	return (
