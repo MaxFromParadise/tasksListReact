@@ -5,7 +5,6 @@ import { Input } from '@/shared/ui/Input/Input';
 import { Select } from '@/shared/ui/Select/Select';
 import { type JSX } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { addTask } from '../../model/actions';
 
 type TaskFormValues = Omit<Task, 'id'>;
 
@@ -14,7 +13,7 @@ interface AddTaskFormProps {
 }
 
 export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
-	const { dispatch } = useTasks();
+	const { addTask, removeTask } = useTasks();
 
 	const {
 		register,
@@ -36,7 +35,7 @@ export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
 			id: crypto.randomUUID(),
 		};
 		onSubmit?.(newTask);
-		dispatch(addTask(newTask));
+		addTask(newTask);
 		reset();
 	};
 
