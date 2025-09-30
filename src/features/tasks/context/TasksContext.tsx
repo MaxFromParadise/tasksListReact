@@ -1,9 +1,9 @@
-import type { Task } from '@/features/tasks/model/types/task/task';
-import { createContext } from 'react';
+import type { Task, TasksAction } from '@/features/tasks/model/types/task/task';
+import { createContext, type Dispatch } from 'react';
 
-interface TasksContextType {
+interface TasksContextProps {
 	tasks: Task[];
-	addTask: (task: Task) => void;
+	dispatch: Dispatch<TasksAction>;
 }
 
-export const TasksContext = createContext<TasksContextType | undefined>(undefined);
+export const TasksContext = createContext<TasksContextProps | undefined>(undefined);

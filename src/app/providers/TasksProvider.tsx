@@ -1,11 +1,14 @@
 import { TasksContext } from '@/features/tasks/context/TasksContext';
-import type { Task } from '@/features/tasks/model/types';
-import { useState, type ReactNode } from 'react';
+import { tasksReducer } from '@/features/tasks/model/reducers/tasksReducer';
+import type { ReactNode } from 'react';
+import { useReducer } from 'react';
 
-export const TasksProvider = ({ children }: { children: ReactNode }) => {
-	const [tasks, setTasks] = useState<Task[]>([]);
+interface TasksProviderProps {
+	children: ReactNode;
+}
 
-	const addTask = (task: Task) => setTasks((prev) => [...prev, task]);
+export const TasksProvider = ({ children }: TasksProviderProps) => {
+	const [tasks, dispatch] = useReducer(tasksReducer, []);
 
-	return <TasksContext.Provider value={{ tasks, addTask }}>{children}</TasksContext.Provider>;
+	return <TasksContext.Provider value={{ tasks, dispatch }}>{children}</TasksContext.Provider>;
 };
