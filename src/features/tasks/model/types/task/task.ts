@@ -8,8 +8,12 @@ export interface Task {
 }
 
 export enum TasksActionType {
+	SET_TASKS = 'SET_TASKS',
 	ADD_TASK = 'ADD_TASK',
 	REMOVE_TASK = 'REMOVE_TASK',
 }
 
-export type TasksAction = { type: TasksActionType.ADD_TASK; payload: Task } | { type: TasksActionType.REMOVE_TASK; payload: string };
+export type TasksAction =
+	| { type: TasksActionType.ADD_TASK; payload: Task }
+	| { type: TasksActionType.REMOVE_TASK; payload: string }
+	| { type: TasksActionType.SET_TASKS; payload: Task[] };

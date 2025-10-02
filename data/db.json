@@ -1,3 +1,22 @@
 {
-	"tasks": []
+  "tasks": [
+    {
+      "id": "2",
+      "title": "Task2",
+      "priority": "Medium",
+      "date": "2025.10.02 10:58"
+    },
+    {
+      "id": "3",
+      "title": "Task3",
+      "priority": "High",
+      "date": "2025.10.02 10:59"
+    },
+    {
+      "id": "7b338f3c-a9ce-4a10-a9c1-257f3e8addd1",
+      "title": "Task1",
+      "priority": "Low",
+      "date": "2025-10-02T14:22"
+    }
+  ]
 }
