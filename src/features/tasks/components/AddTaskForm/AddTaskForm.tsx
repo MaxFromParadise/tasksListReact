@@ -25,7 +25,7 @@ export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
 		defaultValues: {
 			title: '',
 			priority: Priority.Low,
-			date: new Date().toISOString().slice(0, 16),
+			date: new Date().toISOString().slice(0, 16).replace('T', ' '),
 		},
 	});
 
