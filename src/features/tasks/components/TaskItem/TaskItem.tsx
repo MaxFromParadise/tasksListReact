@@ -34,11 +34,11 @@ export const TaskItem = ({ task }: TaskProps): JSX.Element => {
 				<div className='text-gray-500'>Due: {date}</div>
 			</div>
 			<div className='flex flex-col gap-1'>
-				<button className='flex items-center justify-center w-full bg-green-500 text-white px-1.5 py-1 rounded-sm font-bold cursor-pointer hover:bg-green-400 transition-colors'>
+				<button className='flex items-center justify-center w-full bg-green-500 text-white px-1.5 py-1 rounded-sm font-bold cursor-pointer hover:bg-green-400 transition-colors no-drag'>
 					Complete
 				</button>
 				<button
-					className='flex items-center justify-center w-full bg-red-500 text-white px-1.5 py-1 rounded-sm font-bold cursor-pointer hover:bg-red-400 transition-colors'
+					className='flex items-center justify-center w-full bg-red-500 text-white px-1.5 py-1 rounded-sm font-bold cursor-pointer hover:bg-red-400 transition-colors no-drag'
 					onClick={handleDelete}
 				>
 					Delete
