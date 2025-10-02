@@ -17,7 +17,7 @@ export const TasksProvider = ({ children }: TasksProviderProps) => {
 	const addTask = useCallback((task: Task) => dispatch(addTaskAction(task)), []);
 	const removeTask = useCallback((id: string) => dispatch(removeTaskAction(id)), []);
 
-	const value = useMemo(() => ({ tasks, addTask, removeTask }), [tasks]);
+	const value = useMemo(() => ({ tasks, addTask, removeTask }), [tasks, addTask, removeTask]);
 
 	return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;
 };
