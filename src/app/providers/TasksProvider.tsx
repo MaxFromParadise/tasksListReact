@@ -5,7 +5,7 @@ import { tasksReducer } from '@/features/tasks/model/reducers/tasksReducer';
 import type { Task } from '@/features/tasks/model/types';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 interface TasksProviderProps {
 	children: ReactNode;
@@ -18,36 +18,30 @@ export const TasksProvider = ({ children }: TasksProviderProps) => {
 
 	const setTasks = useCallback((tasks: Task[]) => dispatch(setTasksAction(tasks)), []);
 	const addTask = useCallback(async (task: Task) => {
-		try {
-			const created = await postTask(task);
-			dispatch(addTaskAction(created));
-			toast.success('Task added', {
-				position: 'bottom-right',
-				autoClose: 3000,
-			});
-		} catch (err) {
-			console.error(err);
-			toast.error(`${err}`, {
-				position: 'bottom-right',
-				autoClose: 3000,
-			});
-		}
+		await toast.promise(
+			postTask(task).then((created) => {
+				dispatch(addTaskAction(created));
+			}),
+			{
+				loading: 'Adding task...',
+				success: 'Task added',
+				error: 'Failed to add task 😢',
+			},
+			{ position: 'bottom-right' }
+		);
 	}, []);
 	const removeTask = useCallback(async (id: string) => {
-		try {
-			await deleteTask(id);
-			dispatch(removeTaskAction(id));
-			toast.success('Task deleted', {
-				position: 'bottom-right',
-				autoClose: 3000,
-			});
-		} catch (err) {
-			console.error(err);
-			toast.success(`${err}`, {
-				position: 'bottom-right',
-				autoClose: 3000,
-			});
-		}
+		await toast.promise(
+			deleteTask(id).then(() => {
+				dispatch(removeTaskAction(id));
+			}),
+			{
+				loading: 'Deleting task...',
+				success: 'Task deleted!',
+				error: 'Failed to delete task 😢',
+			},
+			{ position: 'bottom-right' }
+		);
 	}, []);
 
 	useEffect(() => {

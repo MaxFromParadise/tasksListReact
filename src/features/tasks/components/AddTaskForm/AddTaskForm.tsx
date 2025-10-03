@@ -5,7 +5,6 @@ import { Input } from '@/shared/ui/Input/Input';
 import { Select } from '@/shared/ui/Select/Select';
 import { type JSX } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ToastContainer } from 'react-toastify';
 
 type TaskFormValues = Omit<Task, 'id'>;
 
@@ -80,7 +79,6 @@ export const AddTaskForm = ({ onSubmit }: AddTaskFormProps): JSX.Element => {
 			>
 				Add Task
 			</button>
-			<ToastContainer />
 		</form>
 	);
 };
