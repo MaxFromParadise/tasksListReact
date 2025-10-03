@@ -5,6 +5,7 @@ import { tasksReducer } from '@/features/tasks/model/reducers/tasksReducer';
 import type { Task } from '@/features/tasks/model/types';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
+import { toast } from 'react-toastify';
 
 interface TasksProviderProps {
 	children: ReactNode;
@@ -20,16 +21,32 @@ export const TasksProvider = ({ children }: TasksProviderProps) => {
 		try {
 			const created = await postTask(task);
 			dispatch(addTaskAction(created));
+			toast.success('Task added', {
+				position: 'bottom-right',
+				autoClose: 3000,
+			});
 		} catch (err) {
 			console.error(err);
+			toast.error(`${err}`, {
+				position: 'bottom-right',
+				autoClose: 3000,
+			});
 		}
 	}, []);
 	const removeTask = useCallback(async (id: string) => {
 		try {
 			await deleteTask(id);
 			dispatch(removeTaskAction(id));
+			toast.success('Task deleted', {
+				position: 'bottom-right',
+				autoClose: 3000,
+			});
 		} catch (err) {
 			console.error(err);
+			toast.success(`${err}`, {
+				position: 'bottom-right',
+				autoClose: 3000,
+			});
 		}
 	}, []);
 
